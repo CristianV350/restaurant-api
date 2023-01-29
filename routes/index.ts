@@ -1,16 +1,13 @@
 import * as bodyParser from "body-parser";
-import * as express from "express";
+import express from "express";
 import { Logger } from "../logger/logger";
-import Ingredient from "./ingredient";
+import Ingredient from "./ingredient.route";
 import User from "./user";
 
 class Routes {
 
     public express: express.Application;
     public logger: Logger;
-
-    // array to hold users
-    public users: any[];
 
     constructor() {
         this.express = express();
@@ -28,6 +25,7 @@ class Routes {
     private routes(): void {
         // user route
         this.express.use("/", User);
+        this.express.use("/", Ingredient)
     }
 }
 

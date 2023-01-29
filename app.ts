@@ -1,8 +1,9 @@
 import * as bodyParser from "body-parser";
-import * as express from "express";
+import express from "express";
 import { Logger } from "./logger/logger";
 import Routes from "./routes/index";
-import Ingredient from "./routes/ingredient";
+// in your server file
+import cors from "cors";
 
 class App {
 
@@ -22,6 +23,7 @@ class App {
 
     // Configure Express middleware.
     private middleware(): void {
+        this.express.use(cors())
         this.express.use(bodyParser.json());
         this.express.use(bodyParser.urlencoded({ extended: false }));
     }
@@ -32,11 +34,9 @@ class App {
             res.send("Typescript App works!!!");
         });
 
-        // user route
+        // routes
         this.express.use("/api", Routes);
-
-        // ingredients route
-        this.express.use("/", Ingredient);
+        
 
         // handle undefined routes
         this.express.use("*", (req, res, next) => {

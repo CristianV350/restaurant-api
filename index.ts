@@ -1,15 +1,13 @@
-import express, { Express, Request, Response } from 'express';
-import dotenv from 'dotenv';
+import app from "./app";
 
-dotenv.config();
+const PORT = process.env.PORT || 3000;
 
-const app: Express = express();
-const port = process.env.APP_PORT;
-
-app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server');
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
 });
 
-app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is listening on port ${PORT}`);
 });
