@@ -1,7 +1,7 @@
 import * as bodyParser from "body-parser";
 import express from "express";
 import { Logger } from "../logger/logger";
-import Ingredient from "./ingredient.route";
+import Category from "./category.route";
 import User from "./user";
 
 class Routes {
@@ -23,9 +23,12 @@ class Routes {
     }
 
     private routes(): void {
+        // category route
+        this.express.use("/category", Category)
+
         // user route
         this.express.use("/", User);
-        this.express.use("/", Ingredient)
+
     }
 }
 

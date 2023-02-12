@@ -1,10 +1,9 @@
 import * as bodyParser from "body-parser";
-import express, { Request, Response } from "express";
+import express, { NextFunction, Request, Response } from "express";
 import { Logger } from "../logger/logger";
 import CategoryModel from '../models/category.model';
-import Error from "../models/error.model";
+import ErrorModel from '../models/error';
 
-const router = express.Router();
 
 interface Category {
     id: number,
@@ -17,14 +16,18 @@ interface CategoryParams {
     name: string
 }
 
-class Ingredient {
+class Category {
     public express: express.Application;
     public logger: Logger;
+
+    // array to hold data for categories
+    public categories: any[];
 
     constructor() {
         this.express = express();
         this.middleware();
         this.routes();
+        this.categories = [];
         this.logger = new Logger();
     }
 
@@ -36,13 +39,13 @@ class Ingredient {
 
     private routes(): void {
         // Get all categories
-        router.get('/', async (req: Request, res: Response) => {
+        this.express.get('/', async (req: Request, res: Response, next: NextFunction) => {
             try {
-                
                 const categories = await CategoryModel.findAll()
-                res.json(categories);
-            }catch (error) {
-                if (error instanceof Error){
+                console.log(categories)
+                // res.json(categories);
+            } catch (error) {
+                if (error instanceof Error) {
                     this.logger.error(error.message)
                     res.status(500).json({ message: error.message });
                 }
@@ -50,7 +53,7 @@ class Ingredient {
         });
 
         // Create a new category
-        router.post('/', async (req: Request, res: Response) => {
+        this.express.post('/', async (req: Request, res: Response, next: NextFunction) => {
             const name = req.body.name;
 
             if (!name) {
@@ -60,10 +63,10 @@ class Ingredient {
             const category = new CategoryModel({ name });
 
             try {
-                const newCategory: Category = await category.save();
+                const newCategory: CategoryModel = await category.save();
                 res.status(201).json(newCategory.id);
             } catch (error) {
-                if (error instanceof Error){
+                if (error instanceof ErrorModel) {
                     this.logger.error(error.message)
                     res.status(400).json({ message: error.message });
                 }
@@ -71,9 +74,9 @@ class Ingredient {
         });
 
         // Update a category
-        router.patch('/:id', async (req: Request, res: Response) => {
-            const name = req.body.name;
-            const id = req.params.id
+        this.express.patch('/:id', async (req: Request, res: Response, next: NextFunction) => {
+            const name: string = req.body.name;
+            const id: string = req.params.id
 
             try {
                 const category = await CategoryModel.findById(id);
@@ -85,7 +88,7 @@ class Ingredient {
                 const updatedCategory = await category.save();
                 res.json(updatedCategory);
             } catch (error) {
-                if (error instanceof Error){
+                if (error instanceof Error) {
                     this.logger.error(error.message)
                     res.status(400).json({ message: error.message });
                 }
@@ -93,17 +96,17 @@ class Ingredient {
         });
 
         // Delete a category
-        router.delete('/:id', async (req: Request, res: Response) => {
+        this.express.delete('/:id', async (req: Request, res: Response, next: NextFunction) => {
             try {
                 const category = await CategoryModel.findById(req.params.id);
                 if (!category) {
                     return res.status(404).json({ message: 'Category not found' });
                 }
 
-                await category.remove();
+                await category.destroy();
                 res.json({ message: 'Category deleted' });
             } catch (error) {
-                if (error instanceof Error){
+                if (error instanceof Error) {
                     this.logger.error(error.message)
                     res.status(500).json({ message: error.message });
                 }
@@ -112,4 +115,4 @@ class Ingredient {
     }
 }
 
-export default new Ingredient().express;
+export default new Category().express;

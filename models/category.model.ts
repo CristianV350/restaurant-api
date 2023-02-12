@@ -10,12 +10,12 @@ class CategoryModel extends Model {
   public readonly updatedAt!: Date;
 
 
-  public static associate(models: { [key: string]: Model}) {
+  public static associate(models: { [key: string]: Model }) {
     CategoryModel.hasMany(Ingredient, { foreignKey: 'category_id' });
   }
 
 
-  public static findById(id: number): Promise<CategoryModel | null> {
+  public static findById(id: number | string): Promise<CategoryModel | null> {
     return this.findOne({ where: { id } });
   }
 

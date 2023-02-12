@@ -10,14 +10,11 @@ class App {
     public express: express.Application;
     public logger: Logger;
 
-    // array to hold users
-    public users: any[];
 
     constructor() {
         this.express = express();
         this.middleware();
         this.routes();
-        this.users = [];
         this.logger = new Logger();
     }
 
@@ -36,7 +33,6 @@ class App {
 
         // routes
         this.express.use("/api", Routes);
-        
 
         // handle undefined routes
         this.express.use("*", (req, res, next) => {
