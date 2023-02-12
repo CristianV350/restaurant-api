@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import app from './app';
-import db from './config/database'
+import db from './models/index'
 import Models from './models/index'
 
 
@@ -16,7 +16,8 @@ const initApp = async () => {
    * You can use the .authenticate() function to test if the connection works.
    */
   try {
-    await db.authenticate();
+    console.log(db["Ingredient"])
+    await db.sequelize.authenticate();
     console.log("Connection has been established successfully.");
 
     /**

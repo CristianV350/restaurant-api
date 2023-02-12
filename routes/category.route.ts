@@ -3,6 +3,7 @@ import express, { NextFunction, Request, Response } from "express";
 import { Logger } from "../logger/logger";
 import CategoryModel from '../models/category.model';
 import ErrorModel from '../models/error';
+import db from "../models/index"
 
 
 interface Category {
@@ -42,8 +43,7 @@ class Category {
         this.express.get('/', async (req: Request, res: Response, next: NextFunction) => {
             try {
                 const categories = await CategoryModel.findAll()
-                console.log(categories)
-                // res.json(categories);
+                res.json(categories);
             } catch (error) {
                 if (error instanceof Error) {
                     this.logger.error(error.message)

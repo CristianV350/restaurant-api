@@ -6,7 +6,6 @@ import sequelize from '../config/database';
 const basename = path.basename(__filename);
 const db: { [key: string]: any } = {};
 
-
 fs
   .readdirSync(__dirname)
   .filter(file => {
