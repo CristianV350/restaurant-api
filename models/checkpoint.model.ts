@@ -1,32 +1,36 @@
 import { Model, DataTypes } from 'sequelize';
-import Ingredient from './ingredient.model';
 import sequelize from './../config/database';
+import CategoryModel from './category.model';
 
-interface CategoryParams {
+interface CheckpointParams {
   id: number,
   name: string
 }
 
-class CategoryModel extends Model {
+class CheckpointModel extends Model {
   public id!: number;
   public name!: string;
   public order!: number;
 
 
   public static associate(models: { [key: string]: Model }) {
-    CategoryModel.hasMany(Ingredient, { foreignKey: 'category_id' });
+    CheckpointModel.belongsTo(CategoryModel, { foreignKey: 'category_id' });
   }
 
-  public static findById(id: number | string | any): Promise<CategoryModel | null> {
+  public static findById(id: number | string | any): Promise<CheckpointModel | null> {
     return this.findOne({ where: { id } });
   }
 }
 
-CategoryModel.init({
+CheckpointModel.init({
   id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     primaryKey: true,
+  },
+  category_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
   },
   name: {
     type: DataTypes.STRING,
@@ -35,8 +39,10 @@ CategoryModel.init({
 }, {
   sequelize: sequelize,
   timestamps: false,
-  modelName: 'Category',
-  tableName: "category",
+  modelName: 'Checkpoint',
+  tableName: "checkpoint",
 });
 
-export default CategoryModel;
+CheckpointModel.sync({ alter: true, force: false })
+
+export default CheckpointModel;

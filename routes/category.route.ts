@@ -3,18 +3,13 @@ import express, { NextFunction, Request, Response } from "express";
 import { Logger } from "../logger/logger";
 import CategoryModel from '../models/category.model';
 import ErrorModel from '../models/error';
-import db from "../models/index"
 
+const controller = require('../controllers/category')
 
 interface Category {
     id: number,
     name: string,
     order: number
-}
-
-interface CategoryParams {
-    id: number,
-    name: string
 }
 
 class Category {
@@ -40,17 +35,11 @@ class Category {
 
     private routes(): void {
         // Get all categories
-        this.express.get('/', async (req: Request, res: Response, next: NextFunction) => {
-            try {
-                const categories = await CategoryModel.findAll()
-                res.json(categories);
-            } catch (error) {
-                if (error instanceof Error) {
-                    this.logger.error(error.message)
-                    res.status(500).json({ message: error.message });
-                }
-            }
-        });
+        this.express.get('/', controller.get)
+        // Get all categories by params
+        this.express.post('/', controller.search);
+        //Get category by id
+        this.express.post('/:id', controller.get)
 
         // Create a new category
         this.express.post('/', async (req: Request, res: Response, next: NextFunction) => {

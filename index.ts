@@ -16,8 +16,8 @@ const initApp = async () => {
    * You can use the .authenticate() function to test if the connection works.
    */
   try {
-    console.log(db["Ingredient"])
     await db.sequelize.authenticate();
+    await db.sequelize.sync()
     console.log("Connection has been established successfully.");
 
     /**
