@@ -32,11 +32,17 @@ CategoryModel.init({
     type: DataTypes.STRING,
     allowNull: false,
   },
+  order: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
 }, {
   sequelize: sequelize,
   timestamps: false,
   modelName: 'Category',
   tableName: "category",
 });
+
+CategoryModel.sync({ alter: true, force: false })
 
 export default CategoryModel;

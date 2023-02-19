@@ -1,6 +1,6 @@
 import { Model, DataTypes } from 'sequelize';
 import sequelize from './../config/database';
-import CategoryModel from './category.model';
+import Ingredient from './ingredient.model';
 
 interface CheckpointParams {
   id: number,
@@ -14,7 +14,7 @@ class CheckpointModel extends Model {
 
 
   public static associate(models: { [key: string]: Model }) {
-    CheckpointModel.belongsTo(CategoryModel, { foreignKey: 'category_id' });
+    CheckpointModel.hasMany(Ingredient, { foreignKey: 'checkpoint_id' });
   }
 
   public static findById(id: number | string | any): Promise<CheckpointModel | null> {
@@ -28,13 +28,13 @@ CheckpointModel.init({
     autoIncrement: true,
     primaryKey: true,
   },
-  category_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
   name: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  address: {
+    type: DataTypes.STRING,
+    allowNull: true,
   },
 }, {
   sequelize: sequelize,

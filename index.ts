@@ -3,7 +3,6 @@ import app from './app';
 import db from './models/index'
 import Models from './models/index'
 
-
 dotenv.config()
 
 const PORT = process.env.APP_PORT || 3000;
@@ -17,7 +16,7 @@ const initApp = async () => {
    */
   try {
     await db.sequelize.authenticate();
-    await db.sequelize.sync()
+    await db.sequelize.sync();
     console.log("Connection has been established successfully.");
 
     /**
