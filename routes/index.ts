@@ -2,6 +2,7 @@ import * as bodyParser from "body-parser";
 import express from "express";
 import { Logger } from "../logger/logger";
 import Category from "./category.route";
+import Checkpoint from "./checkpoint.route";
 import User from "./user";
 
 class Routes {
@@ -25,6 +26,9 @@ class Routes {
     private routes(): void {
         // category route
         this.express.use("/category", Category)
+
+        //checkpoint roue
+        this.express.use("/checkpoint", Checkpoint)
 
         // user route
         this.express.use("/", User);
