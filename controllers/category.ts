@@ -33,3 +33,16 @@ exports.search = (req: Request, res: Response, next: NextFunction) => {
     })
     .catch(err => console.error(err))
 }
+
+// Get all categories
+exports.save = async (req: Request, res: Response, next: NextFunction) => {
+  let params = req.body
+  if (!params) res.status(404).json({ message: "Params not provided!" })
+  let name = params.name
+
+  let exists = await Category.findOne({ where: params })
+  if (exists) res.status(404).json({ message: "Category already exists!" })
+
+  let category = await Category.create(params)
+  res.status(200).json(category)
+}

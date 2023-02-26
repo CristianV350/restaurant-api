@@ -37,35 +37,24 @@ class Category {
         // Get all categories
         this.express.get('/', controller.get)
         // Get all categories by params
-        this.express.post('/', controller.search);
+        this.express.post('/search', controller.search);
         //Get category by id
         this.express.post('/:id', controller.get)
 
         // Create a new category
-        this.express.post('/', async (req: Request, res: Response, next: NextFunction) => {
-            const name = req.body.name;
-
-            if (!name) {
-                return res.status(400).json({ message: 'Name is required' });
-            }
-
-            const category = new CategoryModel({ name });
-
-            try {
-                const newCategory: CategoryModel = await category.save();
-                res.status(201).json(newCategory.id);
-            } catch (error) {
-                if (error instanceof ErrorModel) {
-                    this.logger.error(error.message)
-                    res.status(400).json({ message: error.message });
-                }
-            }
-        });
+        this.express.post('/', controller.save);
 
         // Update a category
         this.express.patch('/:id', async (req: Request, res: Response, next: NextFunction) => {
             const name: string = req.body.name;
             const id: string = req.params.id
+            console.log(name, id)
+            if (!name) {
+                return res.status(400).json({ message: 'Name is required' });
+            }
+            if (!id) {
+                return res.status(400).json({ message: 'Id is required' });
+            }
 
             try {
                 const category = await CategoryModel.findById(id);
