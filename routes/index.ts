@@ -3,6 +3,7 @@ import express from "express";
 import { Logger } from "../logger/logger";
 import Category from "./category.route";
 import Checkpoint from "./checkpoint.route";
+import Ingredient from "./ingredient.route";
 import User from "./user";
 
 class Routes {
@@ -29,6 +30,9 @@ class Routes {
 
         //checkpoint roue
         this.express.use("/checkpoint", Checkpoint)
+
+        //checkpoint roue
+        this.express.use("/ingredient", Ingredient)
 
         // user route
         this.express.use("/", User);

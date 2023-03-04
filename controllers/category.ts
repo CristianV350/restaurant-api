@@ -41,7 +41,10 @@ exports.save = async (req: Request, res: Response, next: NextFunction) => {
   let name = params.name
 
   let exists = await Category.findOne({ where: params })
-  if (exists) res.status(404).json({ message: "Category already exists!" })
+  if (exists) {
+    let category = await exists.update(params)
+    res.status(200).json(category)
+  }
 
   let category = await Category.create(params)
   res.status(200).json(category)
