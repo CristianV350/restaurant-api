@@ -7,11 +7,13 @@ class Ingredient extends Model {
   public id!: number;
   public name!: string;
   public categoryId!: number;
+  public checkpointId!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 
   public category?: Category;
+  public checkpoint?: Checkpoint;
 
   public static associate: () => void;
 }
@@ -30,12 +32,12 @@ Ingredient.init({
     type: DataTypes.FLOAT,
     allowNull: false
   },
-  pruchase_price: {
-    type: DataTypes.FLOAT,
-    allowNull: false
-  },
   measure: {
     type: DataTypes.STRING,
+    allowNull: false
+  },
+  quantity: {
+    type: DataTypes.INTEGER,
     allowNull: false
   },
   category_id: {

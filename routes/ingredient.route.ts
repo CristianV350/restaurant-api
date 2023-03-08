@@ -41,7 +41,10 @@ class Ingredient {
     this.express.post('/search', controller.search);
 
     // Create a new ingredient
-    this.express.post('/', controller.save);
+    this.express.post('/:id', controller.save);
+
+    // Create a new ingredient
+    this.express.post('/', controller.store);
 
     // // Update a category
     // this.express.patch('/:id', async (req: Request, res: Response, next: NextFunction) => {

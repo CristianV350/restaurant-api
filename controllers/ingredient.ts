@@ -14,7 +14,7 @@ exports.create = (req: Request, res: Response) => {
 
 exports.store = async (req: Request, res: Response) => {
   try {
-    const { name, parent_id, price, measure, quantity } = req.body;
+    const { name, category_id, checkpoint_id, price, measure, quantity } = req.body;
 
     if (!name) {
       return res.status(400).json({ error: 'Name is required.' });
@@ -28,7 +28,8 @@ exports.store = async (req: Request, res: Response) => {
 
     const ingredient = await Ingredient.create({
       name,
-      category_id: parent_id,
+      category_id,
+      checkpoint_id,
       price: price || 0,
       measure: measure || 'kg',
       quantity: quantity || 0,
@@ -75,23 +76,16 @@ exports.edit = (req: Request, res: Response) => {
 exports.save = async (req: Request, res: Response) => {
   try {
     let params = req.body;
+
     const { name, measure, price, quantity } = req.body;
     const { id } = req.params;
 
     let ingredient = await Ingredient.findOne({ where: { name, id } });
 
-    if (ingredient) {
-      ingredient = await ingredient.update(params)
-      return res.json(ingredient);
+    if (!ingredient) {
+      return res.json("IUngredient not found");
     }
-
-    ingredient = await Ingredient.create({
-      name,
-      category_id: id,
-      price: price || 0,
-      measure: measure || 'kg',
-      quantity: quantity || 0,
-    });
+    ingredient = await ingredient.update(params)
 
     return res.json(ingredient);
 
