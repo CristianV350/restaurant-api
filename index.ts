@@ -2,6 +2,9 @@ import dotenv from 'dotenv';
 import app from './app';
 import db from './models/index'
 import Models from './models/index'
+import { Request } from 'express';
+import { Response } from 'express';
+import { NextFunction } from 'express';
 
 dotenv.config()
 
@@ -23,7 +26,7 @@ const initApp = async () => {
      * Start the web server on the specified port.
      */
 
-    app.use((req, res, next) => {
+    app.use((req: Request, res: Response, next: NextFunction) => {
       res.header("Access-Control-Allow-Origin", "*");
       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
       next();
