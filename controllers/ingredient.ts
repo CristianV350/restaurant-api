@@ -9,7 +9,7 @@ exports.index = (req: Request, res: Response) => {
 };
 
 exports.create = (req: Request, res: Response) => {
-  // ...
+  // ....
 };
 
 exports.store = async (req: Request, res: Response) => {
