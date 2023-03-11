@@ -4,6 +4,7 @@ import { Logger } from "./logger/logger";
 import Routes from "./routes/index";
 // in your server file
 import cors from "cors";
+import { Request, Response, NextFunction } from "express";
 
 class App {
 
@@ -27,7 +28,7 @@ class App {
 
     private routes(): void {
 
-        this.express.get("/", (req, res, next) => {
+        this.express.get("/", (req: Request, res: Response, next: NextFunction) => {
             res.send("Typescript App works!!!");
         });
 
@@ -35,7 +36,7 @@ class App {
         this.express.use("/api", Routes);
 
         // handle undefined routes
-        this.express.use("*", (req, res, next) => {
+        this.express.use("*", (req: Request, res: Response, next: NextFunction) => {
             res.send("Make sure url is correct!!!");
         });
     }
