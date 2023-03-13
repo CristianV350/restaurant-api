@@ -2,18 +2,21 @@ import { Model, DataTypes, BelongsTo } from 'sequelize';
 import sequelize from '../config/database';
 import Category from './category.model';
 import Checkpoint from './checkpoint.model';
+import Archive from './archive.model';
 
 class Ingredient extends Model {
   public id!: number;
   public name!: string;
   public categoryId!: number;
   public checkpointId!: number;
+  public archiveId!: number;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 
   public category?: Category;
   public checkpoint?: Checkpoint;
+  public archive?: Archive;
 
   public static associate: () => void;
 }
@@ -47,6 +50,10 @@ Ingredient.init({
   checkpoint_id: {
     type: DataTypes.INTEGER,
     allowNull: false
+  },
+  archive_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false
   }
 }, {
   sequelize,
@@ -60,6 +67,10 @@ Ingredient.associate = function () {
 
 Ingredient.associate = () => {
   Ingredient.belongsTo(Checkpoint, { foreignKey: 'checkpoint_id', as: 'checkpoint' });
+}
+
+Ingredient.associate = () => {
+  Ingredient.belongsTo(Archive, { foreignKey: 'archive_id', as: 'archive' });
 }
 
 Ingredient.sync({ alter: true, force: false })

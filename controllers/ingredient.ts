@@ -14,7 +14,7 @@ exports.create = (req: Request, res: Response) => {
 
 exports.store = async (req: Request, res: Response) => {
   try {
-    const { name, category_id, checkpoint_id, price, measure, quantity } = req.body;
+    const { name, category_id, checkpoint_id, archive_id, price, measure, quantity } = req.body;
 
     if (!name) {
       return res.status(400).json({ error: 'Name is required.' });
@@ -30,6 +30,7 @@ exports.store = async (req: Request, res: Response) => {
       name,
       category_id,
       checkpoint_id,
+      archive_id,
       price: price || 0,
       measure: measure || 'kg',
       quantity: quantity || 0,
