@@ -73,5 +73,5 @@ Ingredient.associate = () => {
   Ingredient.belongsTo(Archive, { foreignKey: 'archive_id', as: 'archive' });
 }
 
-Ingredient.sync({ alter: true, force: false })
+Ingredient.sync({ alter: true, force: true })
 export default Ingredient;

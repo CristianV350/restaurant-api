@@ -51,6 +51,6 @@ ArchiveModel.init({
     tableName: "archive",
   });
 
-ArchiveModel.sync({ alter: true, force: false });
+ArchiveModel.sync({ alter: true, force: true });
 
 export default ArchiveModel
