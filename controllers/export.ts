@@ -1,3 +1,4 @@
+// @ts-ignore
 import { Request, Response } from 'express';
 import PDFDocument from 'pdfkit';
 import fs from 'fs/promises';
