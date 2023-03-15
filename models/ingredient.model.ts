@@ -46,17 +46,17 @@ Ingredient.init({
   category_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
-    defaultValue: 1
+    defaultValue: null
   },
   checkpoint_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
-    defaultValue: 1
+    defaultValue: null
   },
   archive_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
-    defaultValue: 1
+    defaultValue: null
   }
 }, {
   sequelize,
