@@ -38,6 +38,7 @@ ArchiveModel.init({
   checkpoint_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
+    defaultValue: 1
   },
   stockList: {
     type: DataTypes.TEXT,
