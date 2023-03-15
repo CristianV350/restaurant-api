@@ -40,7 +40,7 @@ ArchiveModel.init({
     allowNull: true,
   },
   stockList: {
-    type: DataTypes.JSON,
+    type: DataTypes.TEXT,
     allowNull: false,
   },
 },
