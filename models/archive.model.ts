@@ -9,6 +9,13 @@ class ArchiveModel extends Model {
   public year!: string;
   public stockList!: any;
 
+  public static associate(models: { [key: string]: Model }) {
+    ArchiveModel.hasMany(Ingredient, { foreignKey: 'archive_id' });
+  }
+  public static findByDate(date: Date): Promise<ArchiveModel | null> {
+    return this.findOne({ where: { date } });
+  }
+
   public static findById(id: number | string | any): Promise<ArchiveModel | null> {
     return this.findOne({ where: { id } });
   }
@@ -23,13 +30,14 @@ ArchiveModel.init({
     type: DataTypes.STRING,
     allowNull: false,
   },
-  month: {
-    type: DataTypes.STRING,
+  date: {
+    type: DataTypes.DATE,
     allowNull: false,
+    defaultValue: DataTypes.NOW,
   },
-  year: {
-    type: DataTypes.STRING,
-    allowNull: false,
+  checkpoint_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
   },
   stockList: {
     type: DataTypes.JSON,

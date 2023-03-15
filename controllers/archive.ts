@@ -24,7 +24,7 @@ exports.find = (req: Request, res: Response, next: NextFunction) => {
 
 // Find category by params
 exports.search = (req: Request, res: Response, next: NextFunction) => {
-  const params = req.params
+  const params = req.body
 
   Archive.findAll({ where: params })
     .then(archives => {
