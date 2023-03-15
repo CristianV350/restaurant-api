@@ -19,6 +19,10 @@ ArchiveModel.init({
     autoIncrement: true,
     primaryKey: true,
   },
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
   month: {
     type: DataTypes.STRING,
     allowNull: false,

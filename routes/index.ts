@@ -5,6 +5,7 @@ import Category from "./category.route";
 import Checkpoint from "./checkpoint.route";
 import Ingredient from "./ingredient.route";
 import User from "./user";
+import Archive from './archive.route';
 
 class Routes {
 
@@ -28,11 +29,14 @@ class Routes {
         // category route
         this.express.use("/category", Category)
 
-        //checkpoint roue
+        //checkpoint route
         this.express.use("/checkpoint", Checkpoint)
 
-        //checkpoint roue
+        //ingredient route
         this.express.use("/ingredient", Ingredient)
+
+        //archive route
+        this.express.use("/archive", Archive)
 
         // user route
         this.express.use("/", User);

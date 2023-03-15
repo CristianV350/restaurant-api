@@ -38,7 +38,6 @@ exports.search = (req: Request, res: Response, next: NextFunction) => {
 exports.save = async (req: Request, res: Response, next: NextFunction) => {
   let params = req.body
   if (!params) res.status(404).json({ message: "Params not provided!" })
-  let name = params.name
 
   let exists = await Archive.findOne({ where: params })
   if (exists) {
