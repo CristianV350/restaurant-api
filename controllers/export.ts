@@ -1,6 +1,5 @@
-// @ts-ignore
 import { Request, Response } from 'express';
-import PDFDocument from 'pdfkit';
+
 import fs from 'fs/promises';
 import Archive from '../models/archive.model';
 import Ingredient from '../models/ingredient.model'
