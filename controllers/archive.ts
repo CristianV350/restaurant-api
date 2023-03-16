@@ -1,5 +1,6 @@
 import Archive from '../models/archive.model';
 import { NextFunction, Request, Response } from 'express';
+import Ingredient from '../models/ingredient.model';
 
 // Get all categories
 exports.get = (req: Request, res: Response, next: NextFunction) => {
@@ -23,28 +24,29 @@ exports.find = (req: Request, res: Response, next: NextFunction) => {
 }
 
 // Find category by params
-exports.search = (req: Request, res: Response, next: NextFunction) => {
+exports.search = async (req: Request, res: Response, next: NextFunction) => {
   const params = req.body
+  if (!params) res.status(404).json({ message: "Params not provided!" })
 
-  Archive.findAll({ where: params })
-    .then(archives => {
-      if (!archives.length) res.status(404).json({ message: "Archives not found!" })
-      res.status(200).json(archives)
-    })
-    .catch(err => console.error(err))
+  let archives = await Archive.findAll({ where: params })
+  res.status(200).json(archives)
 }
 
 // Get all categories
 exports.save = async (req: Request, res: Response, next: NextFunction) => {
+  let archive = null
   let params = req.body
   if (!params) res.status(404).json({ message: "Params not provided!" })
 
-  let exists = await Archive.findOne({ where: params })
-  if (exists) {
-    let archive = await exists.update(params)
+  archive = await Archive.findOne({ where: params })
+  if (!archive) {
+    archive = await Archive.create({ ...params, stockList: JSON.stringify([]) })
     res.status(200).json(archive)
   }
+  let stockJson = await Ingredient.findAll({ where: { archive_id: archive.id } })
+  if (!stockJson) stockJson = []
+  params["stockList"] = JSON.stringify(stockJson)
 
-  let archive = await Archive.create(params)
+  archive = await archive.update(params)
   res.status(200).json(archive)
 }
