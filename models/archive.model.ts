@@ -38,9 +38,10 @@ ArchiveModel.init({
   checkpoint_id: {
     type: DataTypes.INTEGER,
     allowNull: true,
+    defaultValue: null
   },
   stockList: {
-    type: DataTypes.JSON,
+    type: DataTypes.TEXT,
     allowNull: false,
   },
 },
@@ -51,6 +52,6 @@ ArchiveModel.init({
     tableName: "archive",
   });
 
-ArchiveModel.sync({ alter: true, force: false });
+ArchiveModel.sync({ alter: true, force: true });
 
 export default ArchiveModel

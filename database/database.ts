@@ -1,10 +1,10 @@
 import mysql from 'mysql2';
 
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '123',
-  database: 'restaurant'
+  host: 'mysql://b6c611638e833c:7cdaec52@us-cdbr-east-06.cleardb.net/heroku_d9eea5a9760a88a?reconnect=true',
+  user: 'b6c611638e833c',
+  password: '7cdaec52',
+  database: 'heroku_d9eea5a9760a88a'
 });
 
 connection.connect((err) => {

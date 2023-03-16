@@ -45,6 +45,6 @@ CheckpointModel.init({
   tableName: "checkpoint",
 });
 
-CheckpointModel.sync({ alter: true, force: false })
+CheckpointModel.sync({ alter: true, force: true })
 
 export default CheckpointModel;
